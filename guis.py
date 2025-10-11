@@ -59,6 +59,10 @@ class ProgramManager(UI):
     def prior_program(self):
         self.__verify_list_not_empty()
         self.ACTIVE_PROGRAM = (self.ACTIVE_PROGRAM - 1) % len(self.PROGRAM_LIST)
+    
+    def go_to_program(self,program_num:int):
+        self.__verify_list_not_empty()
+        self.ACTIVE_PROGRAM = program_num % len(self.PROGRAM_LIST)
 
     def add_program(self, func:callable, char:chr = "E", color:Color = Color.BLUE):
         self.PROGRAM_LIST.append(Program(func, char, color))

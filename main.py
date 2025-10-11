@@ -33,11 +33,15 @@ async def run0():
     accel_off()
     await DRIVEBASE.straight(distance=200)
     await DRIVEBASE.straight(distance=-200)
-    await DRIVEBASE.straight(distance=200)
-    await DRIVEBASE.arc(-500,angle=-45)
+    SPEED = 1000
+    await DRIVEBASE.straight(distance=250)
+    await DRIVEBASE.straight(distance=-220)
+    await DRIVEBASE.straight(distance=250)
+    SPEED = 800
+    await DRIVEBASE.arc(-400,angle=-45)
     await DRIVEBASE.straight(distance=-600)
     await RMODULAR.run_angle(800,mod_angle)
-    await wait_until_force_pressed()
+    await DRIVEBASE.stop()
 
 async def run1():
     accel_on()
@@ -51,9 +55,9 @@ async def run2():
 
 async def main():
     PM.add_program(lambda: await motor_control_interface(speed=200),"#",Color.WHITE)
-    PM.add_program(lambda: await run0(),"0",Color.RED)
-    PM.add_program(lambda: await run1(),"1",Color.ORANGE)
-    PM.add_program(lambda: await run2(),"2",Color.YELLOW)
+    PM.add_program(lambda: await run0(),"1",Color.RED)
+    PM.add_program(lambda: await run1(),"2",Color.ORANGE)
+    PM.add_program(lambda: await run2(),"3",Color.YELLOW)
 
     await PM.run()
 
