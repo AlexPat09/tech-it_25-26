@@ -6,7 +6,7 @@ from pybricks.tools import wait, StopWatch
 
 ### VARIABLES ###
 SPEED = 800
-ACCELERATION = 150
+ACCELERATION = 200
 TURN_SPEED = 800
 TURN_ACCELERATION = 200
 
@@ -14,6 +14,8 @@ TURN_ACCELERATION = 200
 HUB = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
 HUB.system.set_stop_button(Button.BLUETOOTH)
 HUB.speaker.volume(100)
+TIMER = StopWatch()
+TIMER.pause()
 
 FSENSOR = ForceSensor(Port.C)
 
@@ -44,5 +46,5 @@ def accel_off():
     DRIVEBASE.settings(SPEED, SPEED/2, TURN_SPEED, TURN_SPEED/2)
 
 async def wait_until_force_pressed():
-    while not await FSENSOR.pressed(force=1):
+    while not await FSENSOR.pressed(force=2):
         await wait(0)

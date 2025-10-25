@@ -25,7 +25,7 @@ songs:dict = {
     }
 
 def old_spice_jingle():
-    return ["A4/16", "A4/16", "B4/8", "D5/8", "C#5/8", "E5/16", "F#5/8", "D5/8."]
+    return ["A5/16", "A5/16", "B5/8", "D6/8", "C#6/8", "E6/16", "F#6/8", "D6/8."]
 
 def star_wars_opening():
     x0 = ["D4/12", "D4/12", "D4/12"]
