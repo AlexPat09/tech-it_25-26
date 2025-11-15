@@ -112,7 +112,6 @@ class ProgramManager(UI):
         await HUB.speaker.beep(523.25, 200)
     async def center_action(self):
         #await HUB.speaker.beep(1046.5, 200)
-        await HUB.speaker.play_notes(old_spice_jingle(),140)
         await self.exec_current_program()
     async def idle_action(self):
         self.update_display()
