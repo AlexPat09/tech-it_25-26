@@ -4,97 +4,94 @@ from hardware_config import *
 from guis import *
 import fun
 
-async def run0():
-    accel_on()
-    mod_angle = 150
-    await RMODULAR.run_angle(800,mod_angle)
-    await DRIVEBASE.straight(distance=620)
-    
-    accel_off()
-    SPEED = 800
-    await DRIVEBASE.turn(-115)
-    await wait(1000)
+async def original_rightside():
+    smooth_accel_on()
+    await DRIVEBASE.straight(700)
     await DRIVEBASE.turn(45)
-    await DRIVEBASE.turn(-20)
-    accel_on()
-
-    await DRIVEBASE.straight(distance=-70)
-    await RMODULAR.run_angle(800,-mod_angle)
-    await DRIVEBASE.straight(distance=70)
-    await DRIVEBASE.turn(5)
-    await DRIVEBASE.turn(-5)
-    await wait(70)
-    await RMODULAR.run_angle(800,mod_angle)
-    await DRIVEBASE.turn(-55)
-    await DRIVEBASE.straight(distance=150)
-    await RMODULAR.run_angle(800,-mod_angle)
-    await RMODULAR.run_angle(800,mod_angle)
-    await DRIVEBASE.straight(distance=-270)
-    LMODULAR.run_angle(250,-370)
-    await DRIVEBASE.turn(100)
-    await DRIVEBASE.straight(distance=140)
-    await RMODULAR.run_angle(800,-mod_angle)
-
-    await DRIVEBASE.turn(15)
-    await DRIVEBASE.straight(distance=-40)
-    LMODULAR.run_angle(250,-15)
-    await DRIVEBASE.turn(10)
-    await DRIVEBASE.straight(distance=75)
-    await DRIVEBASE.straight(distance=-75)
-
-
-    await DRIVEBASE.arc(-400,distance=-150)
-    await DRIVEBASE.straight(distance=-800)
-
-    #await DRIVEBASE.turn(-45)
-    #accel_off()
-    #SPEED = 1000
-    #await DRIVEBASE.straight(distance=200)
-    #await DRIVEBASE.straight(distance=-200)
-    #await DRIVEBASE.straight(distance=250)
-    #await DRIVEBASE.arc(-300,angle=-45)
-    #await DRIVEBASE.straight(distance=-700)
-    #SPEED = 800
-    DRIVEBASE.stop()
-
-async def run1():
-    ##   360 MODULAR MOTOR DEGREES  =  90 ARM DEGREES
-    accel_on()
-    await DRIVEBASE.straight(distance=825)
-    await DRIVEBASE.arc(100,angle=90)
-
-    # Prep for entry
-    await DRIVEBASE.straight(distance=-100)
-    await LMODULAR.run_angle(150,-350)
-
-    # Go halfway in and lower 
-    await DRIVEBASE.straight(distance=100)
-
-    # In n' out with the loot
-    await DRIVEBASE.straight(distance=20)
-    await LMODULAR.run_angle(100,50)
-    await DRIVEBASE.straight(-100)
-    await LMODULAR.run_angle(100,100)
-
-    # Drop off the loot
-    await DRIVEBASE.turn(55)
+    await DRIVEBASE.straight(40)
+    await DRIVEBASE.turn(-45)
+    await DRIVEBASE.turn(90)
     await DRIVEBASE.straight(200)
-    await LMODULAR.run_angle(100,-200)
-    await DRIVEBASE.straight(-50)
-    await DRIVEBASE.turn(-70)
-    await DRIVEBASE.straight(50)
-    
+    await DRIVEBASE.straight(-350)
+    await DRIVEBASE.turn(30)
+    await DRIVEBASE.straight(-300)
+    await DRIVEBASE.turn(15)
+    await DRIVEBASE.straight(200)
+    await DRIVEBASE.arc(220,-135)
+    await DRIVEBASE.turn(-182)
+    await DRIVEBASE.straight(360)
+    await DRIVEBASE.turn(-5)
+
+    await LMODULAR.run_angle(1000, -7*360)
     DRIVEBASE.stop()
 
-async def run2():
-    pass
+async def ship():
+    smooth_accel_off()
+    SPEED = 1200
+    await DRIVEBASE.straight(650)
+    await wait(100)
+    await RMODULAR.run_angle(1000,180)
+    await wait(100)
+    await DRIVEBASE.straight(-650)
+    SPEED = 800
+    smooth_accel_on()
+    DRIVEBASE.stop()
+
+async def rightside():
+    smooth_accel_on()
+
+    # gear launcher
+    await DRIVEBASE.straight(500)
+    for _ in range(3):
+        smooth_accel_off()
+        await RMODULAR.run_angle(800,180)
+        smooth_accel_on()
+        await wait(500)
+        await RMODULAR.run_angle(200,-170)
+
+    # balls
+    await DRIVEBASE.straight(290)
+    await DRIVEBASE.turn(45)
+    await DRIVEBASE.turn(-45)
+    await DRIVEBASE.straight(-50)
+    await DRIVEBASE.turn(90)
+    await DRIVEBASE.straight(250)
+    await DRIVEBASE.straight(-400)
+
+    # push table
+    await DRIVEBASE.turn(30)
+    await DRIVEBASE.straight(-300)
+    await DRIVEBASE.turn(15)
+    await DRIVEBASE.straight(270)
+    await DRIVEBASE.arc(220,-45)
+    await DRIVEBASE.straight(-150)
+    
+    # pull down the bucket
+    smooth_accel_off()
+    await RMODULAR.run_angle(1000,120)
+    await wait(500)
+    await RMODULAR.run_angle(1000,-120)
+    smooth_accel_on()
+    await DRIVEBASE.arc(90,-90)
+
+    # gear thingy
+    await DRIVEBASE.turn(-182)
+    await DRIVEBASE.straight(480)
+    await DRIVEBASE.turn(-5 )
+
+    await LMODULAR.run_angle(1000, -8*360)
+
+    DRIVEBASE.stop()
+
+
 
 async def main():
     await HUB.speaker.play_notes(old_spice_jingle(),140)
     PM.add_program(lambda: await motor_control_interface(speed=1000),"#",Color.WHITE)
-    PM.add_program(lambda: await run0(),"1",Color.RED)
-    PM.add_program(lambda: await run1(),"2",Color.ORANGE)
-    PM.add_program(lambda: await run2(),"3",Color.YELLOW)
+    #PM.add_program(lambda: await run0(),"1",Color.RED)
+    #PM.add_program(lambda: await run1(),"2",Color.ORANGE)
+    PM.add_program(lambda: await rightside(),"3",Color.YELLOW)
+    PM.add_program(lambda: await ship(),"4",Color.GREEN)
     
     await PM.run()
 

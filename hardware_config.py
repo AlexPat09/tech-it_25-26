@@ -13,7 +13,7 @@ TURN_ACCELERATION = 200
 ### HARDWARE SETUP ###
 HUB = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
 HUB.system.set_stop_button(Button.BLUETOOTH)
-HUB.speaker.volume(100)
+HUB.speaker.volume(50)
 TIMER = StopWatch()
 TIMER.pause()
 
@@ -40,10 +40,10 @@ def set_arm_mode(arm_mode:bool, l:Motor=LMODULAR, r:Motor=RMODULAR):
         l = Motor(Port.A)
         r = Motor(Port.E)
 
-def accel_on():
+def smooth_accel_on():
     DRIVEBASE.settings(SPEED, ACCELERATION, TURN_SPEED, TURN_ACCELERATION)
 
-def accel_off():
+def smooth_accel_off():
     DRIVEBASE.settings(SPEED, SPEED/2, TURN_SPEED, TURN_SPEED/2)
 
 async def wait_until_force_pressed():
