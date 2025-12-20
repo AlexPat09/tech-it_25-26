@@ -1,7 +1,7 @@
 from pybricks.parameters import Button, Color, Direction, Port, Side, Stop
 from pybricks.tools import wait, StopWatch, run_task, multitask
 from hardware_config import *
-from fun import rainbow, old_spice_jingle
+from fun import rainbow, windows_xp_startup, old_spice_loop
 
 class UI:
     """Abstract parent class for specialized UI classes such as ProgramManager and MotorManager."""
@@ -47,8 +47,6 @@ class ProgramManager(UI):
     def __init__(self):
         self.ACTIVE_PROGRAM = 0
         self.PROGRAM_LIST = []
-        TIMER.reset()
-        TIMER.resume()
     
     def __verify_list_not_empty(self):
         if self.PROGRAM_LIST == []:
@@ -78,7 +76,7 @@ class ProgramManager(UI):
     async def check_if_quit_button_pressed(self):
         while True:
             if Button.BLUETOOTH in HUB.buttons.pressed():
-                DRIVEBASE.stop()
+                stop_all_motors()
                 return
             await wait(0)
     
@@ -115,6 +113,7 @@ class ProgramManager(UI):
         await self.exec_current_program()
     async def idle_action(self):
         self.update_display()
+        stop_all_motors()
         print(round(TIMER.time()/1000,2),end="\r")
         if round(TIMER.time()/1000,2) == 180:
             await HUB.speaker.beep(800,1000)
@@ -137,6 +136,7 @@ async def motor_control_interface(motors:list = [LMODULAR, RMODULAR], reset_angl
             await selected_motor.run_target(speed,reset_angle_to)
             await wait(200)
         elif Button.BLUETOOTH in HUB.buttons.pressed():
+            stop_all_motors()
             return
         else:
             selected_motor.hold()

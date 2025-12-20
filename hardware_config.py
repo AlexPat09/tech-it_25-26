@@ -29,16 +29,12 @@ DRIVEBASE.settings(SPEED, ACCELERATION, TURN_SPEED, TURN_ACCELERATION)
 LMODULAR = Motor(Port.A, positive_direction=Direction.CLOCKWISE, profile=5)
 RMODULAR = Motor(Port.E, positive_direction=Direction.CLOCKWISE, profile=5)
 
-
-def set_arm_mode(arm_mode:bool, l:Motor=LMODULAR, r:Motor=RMODULAR):
-    l.close()
-    r.close()
-    if arm_mode:
-        l = Motor(Port.A,gears=[[12,20],[12,20]])
-        r = Motor(Port.E,gears=[[20,12],[40,56]])
-    else:
-        l = Motor(Port.A)
-        r = Motor(Port.E)
+def stop_all_motors():
+    DRIVEBASE.stop()
+    LDRIVE.stop()
+    RDRIVE.stop()
+    LMODULAR.stop()
+    RMODULAR.stop()
 
 def smooth_accel_on():
     DRIVEBASE.settings(SPEED, ACCELERATION, TURN_SPEED, TURN_ACCELERATION)

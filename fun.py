@@ -27,6 +27,9 @@ songs:dict = {
 def old_spice_jingle():
     return ["A5/16", "A5/16", "B5/8", "D6/8", "C#6/8", "E6/16", "F#6/8", "D6/8."]
 
+def windows_xp_startup():
+    return ["D#5/8.", "A#4/8_", "G#4/4_", "D#5/8", "A#4/4"]
+
 def star_wars_opening():
     x0 = ["D4/12", "D4/12", "D4/12"]
     x1 = ["G4/2", "D5/2"]
@@ -48,7 +51,17 @@ async def rainbow(cycles=1):
             HUB.light.on(Color(h=j, s=100, v=100))
             await wait(10)
 
+async def star_wars_loop():
+    while True:
+        await HUB.speaker.play_notes(star_wars_opening())
+
+async def old_spice_loop():
+    while True:
+        await HUB.speaker.play_notes(old_spice_jingle())
 
 if __name__ == "__main__":
-    run_task(HUB.speaker.play_notes(old_spice_jingle()))
+    #run_task(HUB.speaker.play_notes(songs["A Home For Flowers"]))
+    #run_task(HUB.speaker.play_notes(old_spice_jingle()))
+    
     run_task(HUB.speaker.play_notes(star_wars_opening()))
+    #run_task(HUB.speaker.play_notes(windows_xp_startup()))
