@@ -51,17 +51,9 @@ async def rainbow(cycles=1):
             HUB.light.on(Color(h=j, s=100, v=100))
             await wait(10)
 
-async def star_wars_loop():
-    while True:
-        await HUB.speaker.play_notes(star_wars_opening())
-
-async def old_spice_loop():
-    while True:
-        await HUB.speaker.play_notes(old_spice_jingle())
-
 if __name__ == "__main__":
-    #run_task(HUB.speaker.play_notes(songs["A Home For Flowers"]))
-    #run_task(HUB.speaker.play_notes(old_spice_jingle()))
+    run_task(HUB.speaker.play_notes(songs["A Home For Flowers"]))
+    #run_task(HUB.speaker.play_notes(old_spice_jin()))
     
-    run_task(HUB.speaker.play_notes(star_wars_opening()))
+    #run_task(HUB.speaker.play_notes(star_wars_opening()))
     #run_task(HUB.speaker.play_notes(windows_xp_startup()))
