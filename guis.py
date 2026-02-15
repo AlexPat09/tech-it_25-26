@@ -90,6 +90,9 @@ class ProgramManager(UI):
             HUB.display.off()
             HUB.light.off()
             HUB.system.set_stop_button(None)
+            HUB.imu.reset_heading(0)
+            DRIVEBASE.reset(0,0)
+            await wait(400)
             await multitask(self.current_program.function(),rainbow(99999),self.check_if_quit_button_pressed(), race=True)
             stop_all_motors()
             set_motor_settings_to_default()
@@ -141,6 +144,7 @@ class MotorControlManager(UI):
     async def center_action(self):
         self.selected_motor.hold()
         self.selected_motor = self.motors[(self.motors.index(self.selected_motor) + 1) % len(self.motors)]
+
         await wait(200)
     async def extra_action(self):
         self.selected_motor.hold()
@@ -148,6 +152,10 @@ class MotorControlManager(UI):
         await wait(200)
     async def idle_action(self):
         self.selected_motor.hold()
+        if self.selected_motor == LMODULAR:
+            HUB.display.char("L")
+        elif self.selected_motor == RMODULAR:
+            HUB.display.char("R")
         await wait(0)
 
 
