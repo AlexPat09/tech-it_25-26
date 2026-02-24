@@ -1,6 +1,8 @@
 from pybricks.tools import wait, run_task
 from hardware_config import *
 
+IGDN = {}
+
 songs:dict = {
     "A Home For Flowers":[
     "F5/2.", "E5/4", "C5/2_", "C5/8", "A4/8", "C5/4",
@@ -16,12 +18,8 @@ songs:dict = {
     "F4/2", "D5/2", "C5/2", "F4/2", 
     "G4/2.", "E5/4", "C5/2", "A4/4", "A#4/4", 
     "C5/2.", "C5/4", "C5/4", "A#4/4", "A4/4", "G4/4",
-    "A4/2", "B5/2", "F#5/2", "F#5/4", "G5/4",
-
-    "A5/2.", "D5/4", "A5/2", "B5/4", "C6/4", 
-    "D6/1", "F#5/2", "G5/4", "A5/4", 
-    "D6/1", "G#5/2", "A5/4", "B5/4", 
-    "E5/1", "F#5/4", "E5/4", "D#5/4", "E5/4"]
+    "B4/2", "B5/2", "F#5/2"
+    ]
     }
 
 def old_spice_jingle():
@@ -51,9 +49,14 @@ async def rainbow(cycles=1):
             HUB.light.on(Color(h=j, s=100, v=100))
             await wait(10)
 
+async def play_frequencies(frequencies:dict):
+    for freq, duration in frequencies.items():
+        await HUB.speaker.beep(freq,duration)
+
 if __name__ == "__main__":
-    run_task(HUB.speaker.play_notes(songs["A Home For Flowers"]))
+    #run_task(play_frequencies(IGDN))
+    #run_task(HUB.speaker.play_notes(songs["A Home For Flowers"],tempo=110))
     #run_task(HUB.speaker.play_notes(old_spice_jin()))
     
     #run_task(HUB.speaker.play_notes(star_wars_opening()))
-    #run_task(HUB.speaker.play_notes(windows_xp_startup()))
+    run_task(HUB.speaker.play_notes(windows_xp_startup()))
