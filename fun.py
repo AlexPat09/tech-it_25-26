@@ -1,8 +1,6 @@
 from pybricks.tools import wait, run_task
 from hardware_config import *
 
-IGDN = {}
-
 songs:dict = {
     "A Home For Flowers":[
     "F5/2.", "E5/4", "C5/2_", "C5/8", "A4/8", "C5/4",
@@ -19,14 +17,10 @@ songs:dict = {
     "G4/2.", "E5/4", "C5/2", "A4/4", "A#4/4", 
     "C5/2.", "C5/4", "C5/4", "A#4/4", "A4/4", "G4/4",
     "B4/2", "B5/2", "F#5/2"
-    ]
+    ],
+    "old_spice_jingle":["A5/16", "A5/16", "B5/8", "D6/8", "C#6/8", "E6/16", "F#6/8", "D6/8."],
+    "windows_xp_startup":["D#5/8.", "A#4/8_", "G#4/4_", "D#5/8", "A#4/4"]
     }
-
-def old_spice_jingle():
-    return ["A5/16", "A5/16", "B5/8", "D6/8", "C#6/8", "E6/16", "F#6/8", "D6/8."]
-
-def windows_xp_startup():
-    return ["D#5/8.", "A#4/8_", "G#4/4_", "D#5/8", "A#4/4"]
 
 def star_wars_opening():
     x0 = ["D4/12", "D4/12", "D4/12"]
@@ -49,14 +43,9 @@ async def rainbow(cycles=1):
             HUB.light.on(Color(h=j, s=100, v=100))
             await wait(10)
 
-async def play_frequencies(frequencies:dict):
-    for freq, duration in frequencies.items():
-        await HUB.speaker.beep(freq,duration)
-
 if __name__ == "__main__":
-    #run_task(play_frequencies(IGDN))
     #run_task(HUB.speaker.play_notes(songs["A Home For Flowers"],tempo=110))
-    #run_task(HUB.speaker.play_notes(old_spice_jin()))
+    run_task(HUB.speaker.play_notes(songs["old_spice_jingle"]))
     
     #run_task(HUB.speaker.play_notes(star_wars_opening()))
-    run_task(HUB.speaker.play_notes(windows_xp_startup()))
+    #run_task(HUB.speaker.play_notes(songs["windows_xp_startup"]))

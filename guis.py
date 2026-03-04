@@ -41,7 +41,7 @@ class UI:
                 await wait(50)
 
 class Program:
-    """Class that stores a singular program upon initializattion that can be displayed by a UI class (ProgramManager)."""
+    """Class that stores a singular program upon initialization that can be displayed by a UI class (ProgramManager, MotorControlManager)."""
     def __init__(self, func:callable, character:chr, light_color:Color):
         self.label:chr = character
         self.color:Color = light_color
@@ -91,7 +91,8 @@ class ProgramManager(UI):
             HUB.light.off()
             HUB.system.set_stop_button(None)
             reset_imu()
-            await multitask(self.current_program.function(),rainbow(99999),self.check_if_quit_button_pressed(), race=True)
+            await multitask(self.current_program.function(),self.check_if_quit_button_pressed(), race=True)
+            DRIVEBASE.use_gyro(True)
             stop_all_motors()
             set_motor_settings_to_normal()
             await wait(400)
@@ -116,7 +117,7 @@ class ProgramManager(UI):
         await wait(200)
         await HUB.speaker.beep(523.25, 200)
     async def center_action(self):
-        #await HUB.speaker.beep(1046.5, 200)
+        await HUB.speaker.beep(1046.5, 200)
         await self.exec_current_program()
     async def extra_action(self):
         pass
