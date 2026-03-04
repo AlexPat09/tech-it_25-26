@@ -6,6 +6,7 @@ import fun
 import urandom
 
 async def rightside_0():
+    await RMODULAR.run_until_stalled(speed=-400,duty_limit=30)
     # gear launcher
     await DRIVEBASE.straight(500)
     for _ in range(3):
