@@ -17,7 +17,7 @@ HIGH_TURN_ACCELERATION = 600
 ### HARDWARE SETUP ###
 HUB = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
 HUB.system.set_stop_button(Button.BLUETOOTH)
-HUB.speaker.volume(100)
+HUB.speaker.volume(0)
 
 FSENSOR = ForceSensor(Port.C)
 
