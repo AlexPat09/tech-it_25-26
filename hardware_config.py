@@ -51,9 +51,12 @@ def set_motor_settings_to_normal():
     turn_rate=DEFAULT_TURN_SPEED, turn_acceleration=NORMAL_TURN_ACCELERATION)
 
 def set_motor_settings_to_high():
-    #DRIVEBASE.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=1000, turn_rate=DEFAULT_TURN_SPEED, turn_acceleration=1000)
     DRIVEBASE.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=HIGH_ACCELERATION,
     turn_rate=DEFAULT_TURN_SPEED, turn_acceleration=HIGH_TURN_ACCELERATION)
+
+def set_motor_settings_to_ULTRA():
+    DRIVEBASE.settings(straight_speed=DEFAULT_SPEED, straight_acceleration=1000,
+     turn_rate=DEFAULT_TURN_SPEED, turn_acceleration=1000)
 
 async def wait_until_force_pressed():
     while not await FSENSOR.pressed(force=2):
