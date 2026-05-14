@@ -6,32 +6,31 @@ import fun
 import urandom
 
 async def rightside_0():
+    RMODULAR.run_angle(640,-320)
     # gear launcher
-    await DRIVEBASE.straight(490)
-    for _ in range(2):
-        await RMODULAR.run_angle(800,200)
-        await wait(200)
-        await RMODULAR.run_angle(200,-100)
-        await wait(100)
-        await RMODULAR.run_angle(200,-100)
-        await wait(100)
-    ###
+    await DRIVEBASE.straight(495)
+    for _ in range(4):
+        await RMODULAR.run_angle(1200,-360)
+        await wait(50+(10*_))
+    await DRIVEBASE.straight(-5)
 
-    await DRIVEBASE.straight(280)
+    await DRIVEBASE.turn(-45)
+    await DRIVEBASE.straight(100)
+    await DRIVEBASE.turn(45)
+    await DRIVEBASE.straight(150)
+    await DRIVEBASE.straight(30)
 
     # balls
-    await DRIVEBASE.turn(35)
-    await DRIVEBASE.turn(-35)
-    await DRIVEBASE.straight(-40)
-    await DRIVEBASE.turn(90)
-    LMODULAR.run_angle(540,-360)
+    await DRIVEBASE.turn(85)
+    set_motor_settings_to_ULTRA()
+    LMODULAR.run_angle(360,360)
     await DRIVEBASE.straight(150)
-    await wait(500)
-    await DRIVEBASE.straight(120)
-    await LMODULAR.run_angle(540,360)
+    await DRIVEBASE.turn(5)
+    await DRIVEBASE.straight(150)
+    await LMODULAR.run_angle(540,-360)
     ###
 
-    await DRIVEBASE.straight(-120)
+    await DRIVEBASE.straight(-150)
 
     # table push
     await DRIVEBASE.arc(-220,-60)
@@ -43,6 +42,7 @@ async def rightside_0():
     ###
     
     # leave
+    LMODULAR.track_target(0)
     await DRIVEBASE.arc(100,20)
     await DRIVEBASE.straight(200,then=Stop.NONE)
     await DRIVEBASE.turn(180)
@@ -51,7 +51,7 @@ async def rightside_0():
 
 
 async def rightside_1():
-    set_motor_settings_to_high()
+    set_motor_settings_to_ULTRA()
     # lift big table
     await DRIVEBASE.straight(340)
     await DRIVEBASE.turn(-45)
@@ -103,6 +103,7 @@ async def leftside():
     DRIVEBASE.use_gyro(False)
     await DRIVEBASE.straight(170)
     await RMODULAR.run_angle(500,360)
+    await DRIVEBASE.arc(-50, distance=50)
     DRIVEBASE.use_gyro(True)
     await DRIVEBASE.straight(-200)
     await LMODULAR.run_angle(200,-130)
@@ -110,7 +111,7 @@ async def leftside():
     await DRIVEBASE.turn(-65)
     await DRIVEBASE.straight(-30)
     await DRIVEBASE.turn(55)
-    await DRIVEBASE.straight(20)
+    await DRIVEBASE.straight(30)
     set_motor_settings_to_ULTRA()
     await LMODULAR.run_angle(200,150)
     await DRIVEBASE.turn(-35)
@@ -122,10 +123,9 @@ async def leftside():
     await wait(200)
     await LMODULAR.run_angle(200,200)
     await DRIVEBASE.straight(-80)
-    DRIVEBASE.settings(straight_acceleration=NORMAL_ACCELERATION,turn_acceleration=200)
-    await DRIVEBASE.turn(110)
+    await DRIVEBASE.turn(-80)
     set_motor_settings_to_ULTRA()
-    await DRIVEBASE.straight(-600)
+    await DRIVEBASE.straight(500)
 
 async def ship():
     # main
@@ -135,12 +135,12 @@ async def ship():
     await DRIVEBASE.straight(350)
     set_motor_settings_to_high()
     await DRIVEBASE.turn(5)
-    await DRIVEBASE.straight(200)
+    await DRIVEBASE.straight(150)
     await wait(500)
     await LMODULAR.run_angle(270,540)
     await DRIVEBASE.straight(-30)
     await DRIVEBASE.turn(-5)
-    await DRIVEBASE.straight(50)
+    await DRIVEBASE.straight(40)
     await RMODULAR.run_angle(720,-360*5)
     ###
 
@@ -154,7 +154,7 @@ async def ship():
     ###
 
 async def dropoff():
-    DRIVEBASE.settings(straight_acceleration=NORMAL_ACCELERATION,turn_acceleration=200)
+    DRIVEBASE.settings(straight_acceleration=NORMAL_ACCELERATION,turn_acceleration=NORMAL_TURN_ACCELERATION/2)
 
     await DRIVEBASE.straight(230)
     await DRIVEBASE.turn(45)
@@ -169,24 +169,23 @@ async def dropoff():
     DRIVEBASE.use_gyro(True)
     await LMODULAR.run_angle(720,-900)
     LMODULAR.run_angle(1000,900)
-    await DRIVEBASE.straight(-200)
-    await DRIVEBASE.turn(-45)
-    await DRIVEBASE.straight(500)
-    await DRIVEBASE.turn(45)
-    await DRIVEBASE.straight(-50)
-    await RMODULAR.run_angle(500,-200)
-    await DRIVEBASE.straight(120)
-    await RMODULAR.run_angle(200,200)
-    DRIVEBASE.use_gyro(False)
-    await DRIVEBASE.turn(15)
-    DRIVEBASE.use_gyro(True)
-    await wait(500)
-    await RMODULAR.run_angle(500,-200)
-    await DRIVEBASE.turn(30)
-    RMODULAR.run_angle(200,200)
     await DRIVEBASE.straight(-150)
-    await DRIVEBASE.turn(30)
+    await DRIVEBASE.turn(-45)
+    await DRIVEBASE.straight(600)
+    await DRIVEBASE.turn(-DRIVEBASE.angle())
+    DRIVEBASE.use_gyro(False)
     await DRIVEBASE.straight(100)
+    DRIVEBASE.use_gyro(True)
+    await reset_imu()
+    await DRIVEBASE.straight(-250)
+    await DRIVEBASE.turn(35)
+    await RMODULAR.run_angle(500,-200)
+    await DRIVEBASE.straight(100)
+    await DRIVEBASE.straight(-40)
+    await RMODULAR.run_angle(1000,200)
+    DRIVEBASE.straight(-100)
+    await RMODULAR.run_angle(400,-200)
+
 
 async def dropoff_alt():
     DRIVEBASE.settings(straight_acceleration=NORMAL_ACCELERATION,turn_acceleration=200)
@@ -203,12 +202,28 @@ async def dropoff_alt():
     await DRIVEBASE.straight(-50)
     DRIVEBASE.use_gyro(True)
     await LMODULAR.run_angle(720,-900)
-    set_motor_settings_to_high()
+    set_motor_settings_to_ULTRA()
     LMODULAR.run_angle(1000,900)
     await DRIVEBASE.straight(-200)
     await DRIVEBASE.turn(-45)
-    await DRIVEBASE.straight(230,then=Stop.NONE)
-    await DRIVEBASE.arc(200,65)
+    await DRIVEBASE.straight(230)
+    await DRIVEBASE.arc(200,40)
+    await DRIVEBASE.straight(80)
+
+async def mineshaftcart():
+    await DRIVEBASE.straight(550)
+    RMODULAR.run_angle(180,-45)
+    LMODULAR.run_angle(180,-270)
+    await DRIVEBASE.turn(45)
+    await DRIVEBASE.straight(250)
+    await DRIVEBASE.turn(12)
+    LMODULAR.run_angle(810,270)
+    DRIVEBASE.settings(straight_speed=100,straight_acceleration=100)
+    await DRIVEBASE.arc(radius=-270,distance=100)
+    await DRIVEBASE.turn(-5)
+    await DRIVEBASE.straight(30)
+    await RMODULAR.run_angle(1000,405)
+    await RMODULAR.run_angle(405,-405)
 
 async def main():
     #startup sound
@@ -221,8 +236,9 @@ async def main():
     PM.add_program(lambda: await transport(),"-",Color.YELLOW)
     PM.add_program(lambda: await leftside(),"L",Color.GREEN)
     PM.add_program(lambda: await ship(),"S",Color.BLUE)
-    PM.add_program(lambda: await dropoff(),"Z",Color.MAGENTA)
-    PM.add_program(lambda: await dropoff_alt(),"z",Color.NONE)
+    #PM.add_program(lambda: await dropoff(),"Z",Color.MAGENTA)
+    PM.add_program(lambda: await dropoff_alt(),"z",Color.MAGENTA)
+    PM.add_program(lambda: await mineshaftcart(),"m",Color.BROWN)
     await PM.run()
 
 PM = ProgramManager()
