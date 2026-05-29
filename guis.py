@@ -100,6 +100,7 @@ class ProgramManager(UI):
             set_motor_settings_to_normal()
             await wait(400)
             HUB.system.set_stop_button(Button.BLUETOOTH)
+            self.next_program()
         except Exception as e:
             print(f"Error executing program: {e}")
             HUB.display.char('E')
